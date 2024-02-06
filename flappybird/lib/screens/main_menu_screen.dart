@@ -1,6 +1,10 @@
+import 'dart:convert';
+
 import 'package:flame/game.dart';
 import 'package:flappy_bird_game/game/assets.dart';
 import 'package:flappy_bird_game/game/flappy_bird_game.dart';
+import 'package:flappy_bird_game/game/ft_game.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class MainMenuScreen extends StatefulWidget {
@@ -21,6 +25,9 @@ class MainMenuScreen extends StatefulWidget {
 }
 
 class _MainMenuScreenState extends State<MainMenuScreen> {
+  FtGame servidor = FtGame();
+  int jugadoresConectados = 1;
+
   bool isVisible1 =
       false; // Variable para controlar la visibilidad del jugador 1
   bool isVisible2 =
@@ -35,7 +42,6 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
     widget.game.pauseEngine();
 
     // Simulamos el número de jugadores conectados (puedes obtener esto de tu lógica de juego)
-    int jugadoresConectados = 2;
 
     return Scaffold(
       body: GestureDetector(

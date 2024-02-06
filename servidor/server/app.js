@@ -24,6 +24,8 @@ const debug = true
 var ws = new webSockets()
 var gLoop = new gameLoop()
 
+var nJugadores = 0
+
 // Start HTTP server
 const app = express()
 const port = process.env.PORT || 8888
@@ -53,19 +55,23 @@ ws.init(httpServer, port)
 
 ws.onConnection = (socket, id) => {
   if (debug) console.log("WebSocket client connected: " + id)
+  nJugadores = nJugadores + 1
 
   // Saludem personalment al nou client
   socket.send(JSON.stringify({
     type: "welcome",
     value: "Welcome to the server",
-    id: id
+    id: id,
+    jugadores : nJugadores
   }))
 
   // Enviem el nou client a tothom
   ws.broadcast(JSON.stringify({
     type: "newClient",
-    id: id
+    id: id,
+    jugadores : nJugadores
   }))
+  console.log(nJugadores)
 }
 
 ws.onMessage = (socket, id, msg) => {

@@ -78,7 +78,7 @@ class _ServerIPScreenState extends State<ServerIPScreen> {
                   String serverIP = _controllerServerIP.text;
                   String playerName = _controllerPlayerName.text;
                   mostrarMensaje(context, serverIP, playerName);
-                  initializeWebSocket();
+                  servidor.initializeWebSocket(playerName);
                 },
                 child: Text('Conectar'),
                 style: ElevatedButton.styleFrom(
@@ -122,28 +122,5 @@ class _ServerIPScreenState extends State<ServerIPScreen> {
         );
       },
     );
-  }
-
-  void initializeWebSocket() {
-    websocket = WebSocketsHandler();
-    websocket.connectToServer("localhost", 8888, serverMessageHandler);
-    websocket.sendMessage('{"type": "init", "name": "pepe1", "color": pepe}');
-  }
-
-  void serverMessageHandler(String message) {
-    if (kDebugMode) {
-      // print("Message received: $message");
-    }
-
-    // Processar els missatges rebuts
-    final data = json.decode(message);
-
-    // Comprovar si 'data' és un Map i si 'type' és igual a 'data'
-    if (data is Map<String, dynamic>) {
-      if (data['type'] == 'welcome') {}
-      if (data['type'] == 'data') {
-        print(data);
-      }
-    }
   }
 }

@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
+import 'package:flappy_bird_game/screens/main_menu_screen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -15,7 +16,9 @@ class FtGame extends FlameGame
 
   late WebSocketsHandler websocket;
   //FtPlayer? _player;
-  //final List<FtOpponent> _opponents = [];
+  final List<String> _opponents = [];
+  int numeroJugadores = 1;
+  MainMenuScreen? mainMenuScreen;
 
   DateTime? lastUpdateTime;
   double serverUpdateInterval = 0; // En segons
@@ -25,9 +28,14 @@ class FtGame extends FlameGame
     return const Color.fromARGB(255, 173, 223, 247);
   }
 
-  void initializeWebSocket() {
+  void initializeWebSocket(String nombre) {
     websocket = WebSocketsHandler();
     websocket.connectToServer("localhost", 8888, serverMessageHandler);
+    websocket.sendMessage('{"type": "init", "name":$nombre, "birdname": pepe}');
+  }
+
+  void setMainMenuScreen(MainMenuScreen screen) {
+    mainMenuScreen = screen;
   }
 
   void serverMessageHandler(String message) {
@@ -41,13 +49,10 @@ class FtGame extends FlameGame
     // Comprovar si 'data' és un Map i si 'type' és igual a 'data'
     if (data is Map<String, dynamic>) {
       if (data['type'] == 'welcome') {
-        //initPlayer(data['id'].toString());
+        numeroJugadores = data['jugadores'];
       }
-      if (data['type'] == 'data') {
-        var value = data['value'];
-        if (value is List) {
-          //updateOpponents(value);
-        }
+      if (data['type'] == 'broadcast') {
+        print(data['jugadores']);
       }
     }
   }
