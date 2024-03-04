@@ -82,7 +82,7 @@ class _ServerIPScreenState extends State<ServerIPScreen> {
                 },
                 child: Text('Conectar'),
                 style: ElevatedButton.styleFrom(
-                  primary: Colors.blue,
+                  backgroundColor: Colors.blue,
                   textStyle: TextStyle(
                     fontSize: 16.0,
                     fontWeight: FontWeight.bold,

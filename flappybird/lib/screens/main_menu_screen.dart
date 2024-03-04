@@ -134,7 +134,7 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
               SizedBox(height: 20),
               // Botón para jugar (activado cuando hay al menos dos jugadores)
               ElevatedButton(
-                onPressed: jugadoresConectados > 1
+                onPressed: jugadoresConectados > 0
                     ? () {
                         widget.game.overlays.remove('mainMenu');
                         widget.game.resumeEngine();

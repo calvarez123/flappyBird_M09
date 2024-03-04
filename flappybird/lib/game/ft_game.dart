@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
+import 'package:flappy_bird_game/components/bird.dart';
 import 'package:flappy_bird_game/screens/main_menu_screen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,7 @@ class FtGame extends FlameGame
 
   late WebSocketsHandler websocket;
   //FtPlayer? _player;
-  final List<String> _opponents = [];
+  final List<Bird> _opponents = [];
   int numeroJugadores = 1;
   MainMenuScreen? mainMenuScreen;
 
@@ -51,40 +52,24 @@ class FtGame extends FlameGame
       if (data['type'] == 'welcome') {
         numeroJugadores = data['jugadores'];
       }
-      if (data['type'] == 'broadcast') {
+      if (data['type'] == 'newClient') {
         print(data['jugadores']);
+        //initPlayer(data['id']);
+
+        /*
+        double birdX = 100.0;
+        double birdY = 200.0;
+        // Añadir el nuevo pájaro a la lista de oponentes
+        var newOpponent = Bird(position: Vector2(birdX, birdY));
+        _opponents.add(newOpponent);
+        // Añadir el nuevo pájaro al mundo del juego
+        world.add(newOpponent);
+        */
       }
     }
   }
 
-  /*
-
-  void initPlayer(String id) {
-    final List<String> randomNames = [
-      "Alice",
-      "Bob",
-      "Charlie",
-      "David",
-      "Eva",
-      "Frank",
-      "Grace",
-      "Hank",
-      "Ivy",
-      "Jack"
-    ];
-    final random = Random();
-    final randomName = randomNames[random.nextInt(randomNames.length)];
-    Color playerColor = getRandomColor();
-    _player = FtPlayer(
-        id: id,
-        position: Vector2((canvasSize.x / 2), (canvasSize.y / 2)),
-        color: playerColor);
-    world.add(_player as Component);
-
-    websocket.sendMessage(
-        '{"type": "init", "name": "$randomName", "color": "${colorToHex(playerColor)}"}');
-  }
-
+/*
   void updateOpponents(List<dynamic> opponentsData) {
     // Crea una llista amb els ID dels oponents actuals
     final currentOpponentIds = _opponents.map((op) => op.id).toList();
@@ -142,7 +127,8 @@ class FtGame extends FlameGame
         // opponent.color = hexToColor(clientColor);
       }
     }
-
+    */
+/*
     // Eliminar oponents que ja no estan en la llista
     _opponents.removeWhere((opponent) {
       bool shouldRemove =
@@ -152,6 +138,7 @@ class FtGame extends FlameGame
       }
       return shouldRemove;
     });
+  
   }
   */
 

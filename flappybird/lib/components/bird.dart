@@ -1,6 +1,7 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
+import 'package:flame/src/game/notifying_vector2.dart';
 import 'package:flappy_bird_game/game/bird_movement.dart';
 import 'package:flappy_bird_game/game/assets.dart';
 import 'package:flappy_bird_game/game/configuration.dart';
@@ -9,9 +10,12 @@ import 'package:flutter/material.dart';
 
 class Bird extends SpriteGroupComponent<BirdMovement>
     with HasGameRef<FlappyBirdGame>, CollisionCallbacks {
-  Bird();
-
   int score = 0;
+
+  // Constructor que acepta la posición inicial del pájaro
+  Bird({required Vector2 position}) {
+    this.position = position;
+  }
 
   @override
   Future<void> onLoad() async {
